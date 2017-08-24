@@ -1,10 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Gradle : com.stalary : codeGroup-0.1.war (exploded)">
-    <output-path>$PROJECT_DIR$/build/libs/exploded/codeGroup-0.1.war</output-path>
+    <output-path>$USER_HOME$/Tomcat9/webapps/ROOT</output-path>
     <properties id="gradle-properties">
-      <options external-project-path="$PROJECT_DIR$">
-        <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
-      </options>
+      <options external-project-path="$PROJECT_DIR$" />
     </properties>
     <root id="root">
       <element id="directory" name="META-INF">

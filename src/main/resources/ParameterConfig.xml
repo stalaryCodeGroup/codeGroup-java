@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameter>
+    <!-- 时间戳 -->
+    <access_token>0</access_token>
+    <access_token_timeStramp>0</access_token_timeStramp>
+    <jsapi_ticket>0</jsapi_ticket>
+    <jsapi_ticket_timeStamp>0</jsapi_ticket_timeStamp>
+    <webAuth_access_token>0</webAuth_access_token>
+    <webAuth_access_token_timeStramp>0</webAuth_access_token_timeStramp>
+    <sign_distance>2</sign_distance>
+</Parameter>
