@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.wxpay:wxpay-sdk:0.0.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.wxpay/wxpay-sdk/0.0.3/30673f92339eb71977deb45b0f7bfa40916d583e/wxpay-sdk-0.0.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.wxpay/wxpay-sdk/0.0.3/7714c06fcb20a1809f92ce450da29a18c6e47e2c/wxpay-sdk-0.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
