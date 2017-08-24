@@ -38,7 +38,7 @@ public class LoginController {
     @Resource
     private AdminService adminService;
 
-    @ApiOperation(value = "用户登陆时调用,--（前台）")
+    @ApiOperation(value = "用户登陆时调用")
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ApiResult userLogin() {
         Integer keyId = WebUtils.getLoginUserId();//获得token中的keyId
@@ -51,7 +51,7 @@ public class LoginController {
         return ApiResult.ok("登陆成功");
     }
 
-    @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）向前台返回token，--（前台）")
+    @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->账号，姓名，密码，学号，性别，向前台返回token")
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
     public ApiResult userRegister(String result) {
         JSONObject jsonObject = JSON.parseObject(result);//接收前台的json串
@@ -77,7 +77,7 @@ public class LoginController {
         return ApiResult.ok(resultMap);
     }
 
-    @ApiOperation(value = "管理员登录 --（后台）")
+    @ApiOperation(value = "管理员登录")
     @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
     public ApiResult adminLogin(String account, String password) {
 
@@ -96,7 +96,7 @@ public class LoginController {
         return ApiResult.ok(resultMap);
     }
 
-    @ApiOperation(value = "添加管理员，需要传入姓名，账号，密码，职务 1 会长 2 副会长 3 部门部长 --（后台）")
+    @ApiOperation(value = "添加管理员，需要传入姓名，账号，密码，职务 1 会长 2 副会长 3 部门部长")
     @RequestMapping(value = "/addAdmin",method = RequestMethod.POST)
     public ApiResult addAdmin(String name, String account, String password, Integer position) {
         Admin admin = adminService.findByAccount(account);

@@ -5,6 +5,8 @@ import com.stalary.codeGroup.repo.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author:Stalary
  * @Description:管理员业务层，处理管理员操作
@@ -20,5 +22,9 @@ public class AdminService extends BaseService<Admin,AdminRepo>{
 
     public Admin findByAccount(String account) {
         return repo.findByAccount(account);//通过账号查找管理员
+    }
+
+    public List<Admin> sortByPosition() {
+        return repo.sortByPosition();//通过职务排序
     }
 }

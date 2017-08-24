@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 
 /**
  * @Author:Stalary
- * @Description:
+ * @Description:积分
  * @Date Created in 2017/8/24
  */
 @RestController

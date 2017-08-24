@@ -50,10 +50,10 @@ public class RankService extends BaseService<Rank,RankRepo>{
         try {
             userService.save(user);
             logService.create("用户：" + keyId + "积分修改成功");
-            return ApiResult.ok("用户：" + keyId + "积分修改成功");
+            return ApiResult.ok("用户积分修改成功");
         } catch (Exception e) {
             logService.create("用户：" + keyId + "积分修改失败！");
-            return ApiResult.error("用户：" + keyId + "积分修改失败！");
+            return ApiResult.error("用户积分修改失败！");
         }
     }
 }
