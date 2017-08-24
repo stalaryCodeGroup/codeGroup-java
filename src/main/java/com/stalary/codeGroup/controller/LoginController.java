@@ -96,7 +96,7 @@ public class LoginController {
         return ApiResult.ok(resultMap);
     }
 
-    @ApiOperation(value = "添加管理员，需要传入姓名 name，账号 account，密码 password，职务 1 会长 2 副会长 3 部门部长 --（后台）")
+    @ApiOperation(value = "添加管理员，需要传入姓名，账号，密码，职务 1 会长 2 副会长 3 部门部长 --（后台）")
     @RequestMapping(value = "/addAdmin",method = RequestMethod.POST)
     public ApiResult addAdmin(String name, String account, String password, Integer position) {
         Admin admin = adminService.findByAccount(account);
