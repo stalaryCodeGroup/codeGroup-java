@@ -17,4 +17,8 @@ public class AdminService extends BaseService<Admin,AdminRepo>{
     public AdminService(AdminRepo repo) {
         super(repo);
     }
+
+    public Admin findByAccount(String account) {
+        return repo.findByAccount(account);//通过账号查找管理员
+    }
 }

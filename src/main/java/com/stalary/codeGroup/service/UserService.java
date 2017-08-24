@@ -13,9 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService extends BaseService<User, UserRepo> {
     @Autowired
-    protected UserService(UserRepo repo) {
+    public UserService(UserRepo repo) {
         super(repo);
     }
-
 
 }

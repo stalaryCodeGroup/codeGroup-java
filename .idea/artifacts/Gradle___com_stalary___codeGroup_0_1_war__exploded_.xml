@@ -1,10 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Gradle : com.stalary : codeGroup-0.1.war (exploded)">
-    <output-path>$PROJECT_DIR$/build/libs/exploded/codeGroup-0.1.war</output-path>
+    <output-path>$USER_HOME$/Tomcat8/webapps</output-path>
     <properties id="gradle-properties">
-      <options external-project-path="$PROJECT_DIR$">
-        <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
-      </options>
+      <options external-project-path="$PROJECT_DIR$" />
     </properties>
     <root id="root">
       <element id="directory" name="META-INF">
@@ -13,7 +11,7 @@
       <element id="javaee-facet-resources" facet="potato_main/web/Web Gradle : codeGroup-0.1.war" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="potato_main" />
+          <element id="module-output" name="codeGroup_main" />
           <element id="dir-copy" path="$PROJECT_DIR$/out/production/resources" />
         </element>
         <element id="directory" name="lib">
