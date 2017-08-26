@@ -59,6 +59,7 @@ public class LoginController {
         user.setAccount((String) jsonObject.get("account"));//账号
         user.setName((String) jsonObject.get("name"));//姓名
         user.setLoginTime(new Date());//登陆时间
+        user.setRegisterTime(new Date());//注册时间
         user.setPassword(MD5Utils.MD5((String) jsonObject.get("password")));//MD5加密的密码
         user.setRank(1000);//默认积分为1000
         user.setStudentNo((String) jsonObject.get("studentNo"));//学号

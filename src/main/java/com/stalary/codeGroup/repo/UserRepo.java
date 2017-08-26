@@ -15,7 +15,7 @@ public interface UserRepo extends BaseRepo<User,Integer>{
     @Query("select u from User u order by u.rank desc")
     List<User> sortByRank();//通过rank排序
 
-    @Query("select u from User u order by u.latestTime asc")
+    @Query("select u from User u order by u.registerTime asc")
     List<User> sortByRegisterTime();//通过注册日期排序
 
     @Query("select u from User u where u.studentNo = ?1")

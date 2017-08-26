@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `studentNo` VARCHAR(45) NOT NULL, -- 学号
   `sex` VARCHAR(10) NOT NULL, -- 性别
   `rank` INT NOT NULL DEFAULT 1000, -- 积分，起始为1000
-  `loginTime` DATETIME, -- 登陆时间
+  `loginTime` DATETIME, -- 上次登陆时间
+  `registerTime` DATETIME, -- 注册时间
   `latestTime` datetime NOT NULL, -- 最后修改时间
   PRIMARY KEY (`keyId`)
 );

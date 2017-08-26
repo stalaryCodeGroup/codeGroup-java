@@ -19,7 +19,8 @@ public class User extends BaseObject{
     private String studentNo;//学号
     private String sex;//性别
     private Integer rank;//积分
-    private Date loginTime;//登陆时间
+    private Date registerTime;//注册时间
+    private Date loginTime;//上次登陆时间
 
     public User() {
     }
@@ -82,5 +83,13 @@ public class User extends BaseObject{
 
     public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 }
