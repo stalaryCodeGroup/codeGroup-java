@@ -4,6 +4,7 @@ import com.stalary.codeGroup.entity.Admin;
 import com.stalary.codeGroup.entity.User;
 import com.stalary.codeGroup.service.AdminService;
 import com.stalary.codeGroup.service.UserService;
+import com.stalary.codeGroup.util.WebUtils;
 import com.stalary.codeGroup.viewmodel.ApiResult;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +56,16 @@ public class showController {
             return ApiResult.ok("无管理员");
         }
         return ApiResult.ok(adminList);
+    }
+
+    @ApiOperation(value = "展示用户信息")
+    @RequestMapping(value = "/showOneUser",method = RequestMethod.POST)
+    public ApiResult showOneUser() {
+        Integer keyId = WebUtils.getLoginUserId();
+        User user = userService.findOne(keyId);
+        if(null == user) {
+            return ApiResult.error("用户：" + keyId + "不存在");
+        }
+        return ApiResult.ok(user);
     }
 }

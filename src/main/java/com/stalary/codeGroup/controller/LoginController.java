@@ -48,7 +48,10 @@ public class LoginController {
         }
         user.setLoginTime(new Date());//存储用户的登陆时间
         userService.save(user);
-        return ApiResult.ok("登陆成功");
+        Map<String, Object> resultMap = new HashMap<>();
+        String token = DigestUtil.Encrypt(user.getKeyId() + ":" + user.getName());
+        resultMap.put("token", token);
+        return ApiResult.ok(resultMap);
     }
 
     @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->账号，姓名，密码，学号，性别，向前台返回token")
