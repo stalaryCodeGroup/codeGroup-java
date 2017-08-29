@@ -51,7 +51,7 @@ public class LoginController {
         user.setLoginTime(new Date());//存储用户的登陆时间
         userService.save(user);
         Map<String, Object> resultMap = new HashMap<>();
-        String token = DigestUtil.Encrypt(user.getKeyId() + ":" + user.getName());
+        String token = DigestUtil.Encrypt(user.getKeyId() + ":" + studentNo);
         resultMap.put("token", token);
         return ApiResult.ok(resultMap);
     }
@@ -85,9 +85,9 @@ public class LoginController {
 
     @ApiOperation(value = "管理员登录")
     @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-    public ApiResult adminLogin(String account, String password) {
+    public ApiResult adminLogin(String studentNo, String password) {
 
-        Admin admin = adminService.findByAccount(account);
+        Admin admin = adminService.findByAccount(studentNo);
 
         if (null == admin) {
             return ApiError.accountNotFound();
@@ -96,14 +96,14 @@ public class LoginController {
             return ApiError.errorPassword();
         }
         Map<String, Object> resultMap = new HashMap<>();
-        String token = DigestUtil.Encrypt(admin.getKeyId() + ":" + account);
+        String token = DigestUtil.Encrypt(admin.getKeyId() + ":" + studentNo);
         resultMap.put("token", token);
         return ApiResult.ok(resultMap);
     }
 
     @ApiOperation(value = "添加管理员，职位为1的会长才可以调用，需要传入姓名，账号，密码，职务 1 会长 2 副会长 3 部门部长")
     @RequestMapping(value = "/addAdmin",method = RequestMethod.POST)
-    public ApiResult addAdmin(String name, String account, String password, Integer position) {
+    public ApiResult addAdmin(String name, String account, String password, Integer position, String studentNo) {
         Admin admin = adminService.findByAccount(account);
         if(null != admin) {
             return ApiResult.error("管理员：" + account + "已存在");
@@ -113,6 +113,7 @@ public class LoginController {
         newAdmin.setAccount(account);//账号
         newAdmin.setPassword(MD5Utils.MD5(password));//MD5加密的密码
         newAdmin.setPosition(position);//职务 1 会长 2 副会长 3 部门部长
+        newAdmin.setStudentNo(studentNo);//学号
         try {
             adminService.save(newAdmin);
             logService.create("管理员" + name + "添加成功");
@@ -135,7 +136,7 @@ public class LoginController {
     }
 
     @ApiOperation(value = "删除用户，需要传入用户的keyId")
-    @RequestMapping(value = "/deleteUser")
+    @RequestMapping(value = "/deleteUser",method = RequestMethod.POST)
     public ApiResult deleteUser(Integer keyId) {
         User user = userService.findOne(keyId);
         if(null == user) {

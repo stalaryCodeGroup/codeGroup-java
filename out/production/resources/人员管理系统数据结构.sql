@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `keyId` int AUTO_INCREMENT, -- keyId自增,作为唯一标识
   `name` VARCHAR(45) NOT NULL, -- 姓名
   `account` VARCHAR(45) NOT NULL, -- 账号（手机号）
+  `studentNo` VARCHAR(45) NOT NULL, -- 学号
   `password` VARCHAR(100) NOT NULL, -- 密码
   `position` INT NOT NULL, -- //职位 1 会长 2 副会长 3 部门部长
   `latestTime` datetime NOT NULL, -- 最后修改时间
