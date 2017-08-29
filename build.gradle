@@ -1,0 +1,55 @@
+group 'com.stalary'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+    }
+}
+
+war {
+    baseName = 'codeGroup'
+    version = '0.1'
+}
+
+repositories {
+    maven { url "http://repo.spring.io/libs-snapshot" }
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("mysql:mysql-connector-java:5.1.38")
+    compile 'org.apache.shiro:shiro-core:1.2.4'
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.7.3'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.7'
+    compile 'com.qiniu:qiniu-java-sdk:7.2.+'
+    compile files('lib/localLib/alipay-sdk-java20170411150054.jar')
+    compile files('lib/localLib/commons-logging-1.1.1.jar')
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    compile group: 'com.github.wxpay', name: 'wxpay-sdk', version: '0.0.3'
+
+}
