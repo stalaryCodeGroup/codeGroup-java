@@ -67,12 +67,12 @@ public class ApiError extends ApiResult {
      *
      * @return ApiError
      */
-    public static ApiError loginIdNotFound() {
-        return new ApiError(NOLoginId, "不存在的用户名");
+    public static ApiError accountNotFound() {
+        return new ApiError(0, "不存在的用户名");
     }
 
     public static ApiError errorPassword() {
-        return new ApiError(ErrorPassword, "密码错误");
+        return new ApiError(0, "密码错误");
     }
 
     public static ApiError multipleRegistration() {

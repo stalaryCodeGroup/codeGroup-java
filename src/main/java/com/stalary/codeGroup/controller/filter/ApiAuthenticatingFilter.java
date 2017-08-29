@@ -87,7 +87,7 @@ public class ApiAuthenticatingFilter implements Filter {
     private String getAuthHeader(ServletRequest request) {
         String authHeader = ((HttpServletRequest) request).getHeader(Constant.Authorization);
         if (StringUtils.isEmpty(authHeader)) {
-            authHeader = "Basic 036fe7701acd82b5249a166cfc8afd1868383003d8bfa51ebcf727b2a4087aa4";
+            authHeader = "Basic 6595e5e80fbe5997e8cb699dcf54a4be54563ad24918ec6c4406348c4c7e2d28";
         }
 
 

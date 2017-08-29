@@ -40,11 +40,13 @@ public class LoginController {
 
     @ApiOperation(value = "用户登陆时调用")
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
-    public ApiResult userLogin() {
-        Integer keyId = WebUtils.getLoginUserId();//获得token中的keyId
-        User user = userService.findOne(keyId);//通过keyId查找
+    public ApiResult userLogin(String studentNo, String password) {
+        User user = userService.findByStudentNo(studentNo);//通过学号查找用户
         if(null == user) {
-            return ApiResult.error("用户：" + keyId + "不存在");
+            return ApiError.accountNotFound();
+        }
+        if(!user.getPassword().equals(MD5Utils.MD5(password))) {
+            return ApiError.errorPassword();
         }
         user.setLoginTime(new Date());//存储用户的登陆时间
         userService.save(user);
@@ -88,19 +90,18 @@ public class LoginController {
         Admin admin = adminService.findByAccount(account);
 
         if (null == admin) {
-            return ApiError.loginIdNotFound();
+            return ApiError.accountNotFound();
         }
         if (!admin.getPassword().equals(MD5Utils.MD5(password))) {
             return ApiError.errorPassword();
         }
-
         Map<String, Object> resultMap = new HashMap<>();
         String token = DigestUtil.Encrypt(admin.getKeyId() + ":" + account);
         resultMap.put("token", token);
         return ApiResult.ok(resultMap);
     }
 
-    @ApiOperation(value = "添加管理员，需要传入姓名，账号，密码，职务 1 会长 2 副会长 3 部门部长")
+    @ApiOperation(value = "添加管理员，职位为1的会长才可以调用，需要传入姓名，账号，密码，职务 1 会长 2 副会长 3 部门部长")
     @RequestMapping(value = "/addAdmin",method = RequestMethod.POST)
     public ApiResult addAdmin(String name, String account, String password, Integer position) {
         Admin admin = adminService.findByAccount(account);
@@ -120,6 +121,28 @@ public class LoginController {
             logService.create("管理员" + name + "添加失败");
             return ApiResult.error("管理员" + name + "添加失败");
         }
+    }
+
+    @ApiOperation(value = "删除管理员，职位为1的会长才可以调用，需要传入要删除管理员的keyId")
+    @RequestMapping(value = "/deleteAdmin",method = RequestMethod.POST)
+    public ApiResult deleteAdmin(Integer keyId) {
+        Admin admin = adminService.findOne(keyId);
+        if(null == admin) {
+            return ApiResult.error("管理员不存在");
+        }
+        adminService.deleteById(keyId);
+        return ApiResult.ok("管理员删除成功");
+    }
+
+    @ApiOperation(value = "删除用户，需要传入用户的keyId")
+    @RequestMapping(value = "/deleteUser")
+    public ApiResult deleteUser(Integer keyId) {
+        User user = userService.findOne(keyId);
+        if(null == user) {
+            return ApiResult.error("用户不存在");
+        }
+        userService.deleteById(keyId);
+        return ApiResult.ok("用户删除成功");
     }
 
 }

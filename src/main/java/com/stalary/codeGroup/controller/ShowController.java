@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "show")
-public class showController {
+public class ShowController {
 
     @Resource
     private UserService userService;
@@ -29,8 +29,8 @@ public class showController {
     private AdminService adminService;
 
     @ApiOperation(value = "展示用户信息时调用，需要传入排序的类型 1 按照rank积分排序 2 按照注册日期排序")
-    @RequestMapping(value = "/showUser",method = RequestMethod.POST)
-    public ApiResult showUser(Integer type) {
+    @RequestMapping(value = "/showUserList",method = RequestMethod.POST)
+    public ApiResult showUserList(Integer type) {
         if(1 == type) {
             List<User> userList = userService.sortByRank();//通过rank排序
             if(null == userList || 0 == userList.size()) {
@@ -48,9 +48,9 @@ public class showController {
         }
     }
 
-    @ApiOperation(value = "展示管理员列表")
-    @RequestMapping(value = "/showAdmin",method = RequestMethod.POST)
-    public ApiResult showAdmin() {
+    @ApiOperation(value = "展示管理员列表,按照职位排序")
+    @RequestMapping(value = "/showAdminList",method = RequestMethod.POST)
+    public ApiResult showAdminList() {
         List<Admin> adminList = adminService.sortByPosition();
         if(null == adminList || 0 == adminList.size()) {
             return ApiResult.ok("无管理员");
@@ -64,8 +64,19 @@ public class showController {
         Integer keyId = WebUtils.getLoginUserId();
         User user = userService.findOne(keyId);
         if(null == user) {
-            return ApiResult.error("用户：" + keyId + "不存在");
+            return ApiResult.error("用户不存在");
         }
         return ApiResult.ok(user);
+    }
+
+    @ApiOperation(value = "展示管理员信息")
+    @RequestMapping(value = "/showOneAdmin",method = RequestMethod.POST)
+    public ApiResult showOneAdmin() {
+        Integer keyId = WebUtils.getLoginUserId();
+        Admin admin = adminService.findOne(keyId);
+        if(null == admin) {
+            return ApiResult.error("用户不存在");
+        }
+        return ApiResult.ok(admin);
     }
 }
