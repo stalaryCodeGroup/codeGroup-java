@@ -56,7 +56,7 @@ public class LoginController {
         return ApiResult.ok(resultMap);
     }
 
-    @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->账号，姓名，密码，学号，性别，向前台返回token")
+    @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->手机号，姓名，密码，学号，性别，向前台返回token")
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
     public ApiResult userRegister(String result) {
         JSONObject jsonObject = JSON.parseObject(result);//接收前台的json串

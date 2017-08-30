@@ -3,7 +3,6 @@ package com.stalary.codeGroup.controller;
 import com.stalary.codeGroup.entity.Admin;
 import com.stalary.codeGroup.entity.User;
 import com.stalary.codeGroup.service.AdminService;
-import com.stalary.codeGroup.service.LogService;
 import com.stalary.codeGroup.service.UserService;
 import com.stalary.codeGroup.util.MD5Utils;
 import com.stalary.codeGroup.util.WebUtils;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.jws.soap.SOAPBinding;
 
 /**
  * @Author:Stalary
@@ -30,7 +28,7 @@ public class AlterController {
     @Resource
     private UserService userService;
 
-    @ApiOperation("用户修改密码，需要传入两个参数 1 token，2 原密码 3 新密码")
+    @ApiOperation("用户修改密码，需要传入三个参数 1 token，2 原密码 3 新密码")
     @RequestMapping(value = "/userAlterPassword",method = RequestMethod.POST)
     public ApiResult userAlterPassword(String oldPassword, String newPassword) {
         Integer keyId = WebUtils.getLoginUserId();
@@ -44,15 +42,17 @@ public class AlterController {
         return userService.alterPassword(user,newPassword);
     }
 
-    @ApiOperation("用户忘记密码时，需要传入三个参数 1 token，2 学号 3 密码")
+    @ApiOperation("用户忘记密码时，需要传入三个参数 1 学号 2 邮箱 3 密码")
     @RequestMapping(value = "/userForgetPassword",method = RequestMethod.POST)
-    public ApiResult userForgetPassword(String studentNo, String password) {
-        Integer keyId = WebUtils.getLoginUserId();
+    public ApiResult userForgetPassword(String studentNo, String mail, String password) {
         User user = userService.findByStudentNo(studentNo);
         if(null == user) {
-            return ApiResult.error("用户：" + keyId + "学号输入错误");
+            return ApiResult.error("学号输入错误");
         }
-        return userService.alterPassword(user,password);
+        if(!user.getMail().equals(mail)) {
+            return ApiResult.error("邮箱输入错误");
+        }
+        return userService.alterPassword(user, password);
     }
 
     @ApiOperation("修改管理员密码 需要传入 三个参数 1 管理员账号 2 原密码 3 新密码")

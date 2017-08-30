@@ -21,6 +21,12 @@ public class User extends BaseObject{
     private Integer rank;//积分
     private Date registerTime;//注册时间
     private Date loginTime;//上次登陆时间
+    private String region;//居住地
+    private String major;//专业
+    private String year;//年级
+    private String mail;//邮箱
+
+
 
     public User() {
     }
@@ -91,5 +97,37 @@ public class User extends BaseObject{
 
     public void setRegisterTime(Date registerTime) {
         this.registerTime = registerTime;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }
