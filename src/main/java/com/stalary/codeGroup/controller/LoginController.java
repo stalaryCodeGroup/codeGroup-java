@@ -56,19 +56,27 @@ public class LoginController {
         return ApiResult.ok(resultMap);
     }
 
-    @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->手机号，姓名，密码，学号，性别，向前台返回token")
+    @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->手机号，姓名，密码，学号，性别，家乡，邮箱，年级，专业向前台返回token")
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
     public ApiResult userRegister(String result) {
         JSONObject jsonObject = JSON.parseObject(result);//接收前台的json串
+        if(null != userService.findByStudentNo((String) jsonObject.get("studentNo"))) {
+            return ApiResult.error("已注册，请勿重复注册！");
+        }
         User user = new User();
-        user.setAccount((String) jsonObject.get("account"));//账号
+        user.setAccount((String) jsonObject.get("phone"));//账号
         user.setName((String) jsonObject.get("name"));//姓名
         user.setLoginTime(new Date());//登陆时间
         user.setRegisterTime(new Date());//注册时间
         user.setPassword(MD5Utils.MD5((String) jsonObject.get("password")));//MD5加密的密码
         user.setRank(1000);//默认积分为1000
         user.setStudentNo((String) jsonObject.get("studentNo"));//学号
-        user.setSex((String) jsonObject.get("sex"));//性别
+        String finalSex = jsonObject.get("sex").equals("male") ? "男" : "女";
+        user.setSex(finalSex);//性别
+        user.setMajor((String) jsonObject.get("major"));//专业
+        user.setMail((String) jsonObject.get("mail"));//邮箱
+        user.setYear((String) jsonObject.get("year"));//年级
+        user.setRegion((String) jsonObject.get("region"));//家乡
         Map<String, Object> resultMap = new HashMap<>();
         try {
             userService.save(user);

@@ -11,6 +11,10 @@ CREATE TABLE IF NOT EXISTS `user` (
   `studentNo` VARCHAR(45) NOT NULL, -- 学号
   `sex` VARCHAR(10) NOT NULL, -- 性别
   `rank` INT NOT NULL DEFAULT 1000, -- 积分，起始为1000
+  `region` VARCHAR(45), -- 家乡
+  `major` VARCHAR(45) NOT NULL, -- 专业
+  `year` VARCHAR(45) NOT NULL, -- 年级
+  `mail` VARCHAR(45) NOT NULL, -- 邮箱
   `loginTime` DATETIME, -- 上次登陆时间
   `registerTime` DATETIME, -- 注册时间
   `latestTime` datetime NOT NULL, -- 最后修改时间
@@ -26,10 +30,6 @@ CREATE TABLE IF NOT EXISTS `rank` (
   `alterDetail` varchar(50), -- 积分变化详情
   `type` varchar(50), -- 积分变化类型 1 签到 2 参加活动 3 比赛 4 违规
   `latestTime` datetime NOT NULL, -- 最后修改时间
-  `region` VARCHAR(45) NOT NULL, -- 家乡
-  `major` VARCHAR(45) NOT NULL, -- 专业
-  `year` VARCHAR(45) NOT NULL, -- 年级
-  `mail` VARCHAR(45) NOT NULL, -- 邮箱
   PRIMARY KEY (`keyId`)
 );
 
