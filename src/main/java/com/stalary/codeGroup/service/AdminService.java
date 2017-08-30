@@ -26,6 +26,10 @@ public class AdminService extends BaseService<Admin,AdminRepo>{
         return repo.findByAccount(account);//通过账号查找管理员
     }
 
+    public Admin findByStudentNo(String studentNo) {
+        return repo.findByStudentNo(studentNo);//通过学号查找管理员
+    }
+
     public List<Admin> sortByPosition() {
         return repo.sortByPosition();//通过职务排序
     }

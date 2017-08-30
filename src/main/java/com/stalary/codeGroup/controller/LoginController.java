@@ -87,7 +87,7 @@ public class LoginController {
     @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
     public ApiResult adminLogin(String studentNo, String password) {
 
-        Admin admin = adminService.findByAccount(studentNo);
+        Admin admin = adminService.findByStudentNo(studentNo);
 
         if (null == admin) {
             return ApiError.accountNotFound();
