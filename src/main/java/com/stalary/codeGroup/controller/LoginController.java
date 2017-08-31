@@ -83,12 +83,11 @@ public class LoginController {
             logService.create("用户：" + user.getKeyId() + "注册成功");
             String token = DigestUtil.Encrypt(user.getKeyId() + ":" + user.getName());
             resultMap.put("token", token);
+            return ApiResult.ok(resultMap);
         } catch (Exception e) {
             logService.create("用户注册失败");
-            resultMap.put("token", null);
+            return ApiResult.error("注册失败");
         }
-
-        return ApiResult.ok(resultMap);
     }
 
     @ApiOperation(value = "管理员登录")
