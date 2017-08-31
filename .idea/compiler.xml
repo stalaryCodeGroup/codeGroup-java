@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="potato_main" target="1.8" />
-      <module name="potato_test" target="1.8" />
+      <module name="codeGroup_main" target="1.8" />
+      <module name="codeGroup_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
