@@ -43,10 +43,10 @@ public class LoginController {
     public ApiResult userLogin(String studentNo, String password) {
         User user = userService.findByStudentNo(studentNo);//通过学号查找用户
         if(null == user) {
-            return ApiResult.error("账号不存在");
+            return ApiError.accountNotFound();
         }
         if(!user.getPassword().equals(MD5Utils.MD5(password))) {
-            return ApiResult.error("密码错误");
+            return ApiError.errorPassword();
         }
         user.setLoginTime(new Date());//存储用户的登陆时间
         userService.save(user);
@@ -98,10 +98,10 @@ public class LoginController {
         Admin admin = adminService.findByStudentNo(studentNo);
 
         if (null == admin) {
-            return ApiResult.error("账号不存在");
+            return ApiError.accountNotFound();
         }
         if (!admin.getPassword().equals(MD5Utils.MD5(password))) {
-            return ApiResult.error("密码错误");
+            return ApiError.errorPassword();
         }
         Map<String, Object> resultMap = new HashMap<>();
         String token = DigestUtil.Encrypt(admin.getKeyId() + ":" + studentNo);
