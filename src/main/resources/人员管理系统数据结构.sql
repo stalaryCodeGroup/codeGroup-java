@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `major` VARCHAR(45) NOT NULL, -- 专业
   `year` VARCHAR(45) NOT NULL, -- 年级
   `mail` VARCHAR(45) NOT NULL, -- 邮箱
+  `qq` VARCHAR(45), -- QQ号
   `loginTime` DATETIME, -- 上次登陆时间
   `registerTime` DATETIME, -- 注册时间
   `latestTime` datetime NOT NULL, -- 最后修改时间
@@ -45,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `studentNo` VARCHAR(45) NOT NULL, -- 学号
   `password` VARCHAR(100) NOT NULL, -- 密码
   `position` INT NOT NULL, -- //职位 1 会长 2 副会长 3 部门部长
+  `year` INT NOT NULL, -- 年级
   `latestTime` datetime NOT NULL, -- 最后修改时间
   PRIMARY KEY (`keyId`)
 );

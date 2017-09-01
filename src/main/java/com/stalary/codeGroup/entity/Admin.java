@@ -17,6 +17,7 @@ public class Admin extends BaseObject{
     private String password;//密码
     private Integer position;//职位 1 会长 2 副会长 3 部门部长
     private String studentNo;//学号(账号)
+    private Integer year;//年级
 
     public Admin() {
     }
@@ -63,5 +64,13 @@ public class Admin extends BaseObject{
 
     public void setStudentNo(String studentNo) {
         this.studentNo = studentNo;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }

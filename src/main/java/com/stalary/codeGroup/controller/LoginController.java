@@ -55,7 +55,7 @@ public class LoginController {
         return ApiResult.ok(resultMap);
     }
 
-    @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->手机号，姓名，密码，学号，性别，家乡，邮箱，年级，专业向前台返回token")
+    @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->手机号，姓名，密码，学号，性别，家乡，邮箱，年级，专业，qq号向前台返回token")
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
     public ApiResult userRegister(String result) {
         JSONObject jsonObject = JSON.parseObject(result);//接收前台的json串
@@ -74,6 +74,7 @@ public class LoginController {
         user.setSex(finalSex);//性别
         user.setMajor((String) jsonObject.get("major"));//专业
         user.setMail((String) jsonObject.get("mail"));//邮箱
+        user.setQQ((String) jsonObject.get("qq"));//qq号
         user.setYear((String) jsonObject.get("year"));//年级
         user.setRegion((String) jsonObject.get("region"));//家乡
         Map<String, Object> resultMap = new HashMap<>();
@@ -107,9 +108,9 @@ public class LoginController {
         return ApiResult.ok(resultMap);
     }
 
-    @ApiOperation(value = "添加管理员，职位为1的会长才可以调用，需要传入姓名，账号，密码，职务 1 会长 2 副会长 3 部门部长")
+    @ApiOperation(value = "添加管理员，职位为1的会长才可以调用，需要传入姓名，账号，密码，职务，年级 1 会长 2 副会长 3 部门部长")
     @RequestMapping(value = "/addAdmin",method = RequestMethod.POST)
-    public ApiResult addAdmin(String name, String phone, String password, Integer position, String studentNo) {
+    public ApiResult addAdmin(String name, String phone, String password, Integer position, String studentNo, Integer year) {
         Admin admin = adminService.findByStudentNo(studentNo);
         if(null != admin) {
             return ApiResult.error("管理员：" + studentNo + "已存在");
@@ -120,6 +121,7 @@ public class LoginController {
         newAdmin.setPassword(MD5Utils.MD5(password));//MD5加密的密码
         newAdmin.setPosition(position);//职务 1 会长 2 副会长 3 部门部长
         newAdmin.setStudentNo(studentNo);//账号(学号)
+        newAdmin.setYear(year);//年级
         try {
             adminService.save(newAdmin);
             logService.create("管理员" + name + "添加成功");

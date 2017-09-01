@@ -25,7 +25,7 @@ public class User extends BaseObject{
     private String major;//专业
     private String year;//年级
     private String mail;//邮箱
-
+    private String QQ;//QQ号
 
 
     public User() {
@@ -129,5 +129,13 @@ public class User extends BaseObject{
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getQQ() {
+        return QQ;
+    }
+
+    public void setQQ(String QQ) {
+        this.QQ = QQ;
     }
 }
