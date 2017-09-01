@@ -9,7 +9,6 @@ import com.stalary.codeGroup.service.LogService;
 import com.stalary.codeGroup.service.UserService;
 import com.stalary.codeGroup.util.DigestUtil;
 import com.stalary.codeGroup.util.MD5Utils;
-import com.stalary.codeGroup.util.WebUtils;
 import com.stalary.codeGroup.viewmodel.ApiError;
 import com.stalary.codeGroup.viewmodel.ApiResult;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +37,7 @@ public class LoginController {
     @Resource
     private AdminService adminService;
 
-    @ApiOperation(value = "用户登陆时调用")
+    @ApiOperation(value = "用户登陆时调用，需要传入两个参数 1 账号(学号) 2 密码")
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ApiResult userLogin(String studentNo, String password) {
         User user = userService.findByStudentNo(studentNo);//通过学号查找用户
@@ -64,13 +63,13 @@ public class LoginController {
             return ApiResult.error("已注册，请勿重复注册！");
         }
         User user = new User();
-        user.setAccount((String) jsonObject.get("phone"));//账号
+        user.setPhone((String) jsonObject.get("phone"));//手机号
         user.setName((String) jsonObject.get("name"));//姓名
         user.setLoginTime(new Date());//登陆时间
         user.setRegisterTime(new Date());//注册时间
         user.setPassword(MD5Utils.MD5((String) jsonObject.get("password")));//MD5加密的密码
         user.setRank(1000);//默认积分为1000
-        user.setStudentNo((String) jsonObject.get("studentNo"));//学号
+        user.setStudentNo((String) jsonObject.get("studentNo"));//账号(学号)
         String finalSex = jsonObject.get("sex").equals("male") ? "男" : "女";
         user.setSex(finalSex);//性别
         user.setMajor((String) jsonObject.get("major"));//专业
@@ -90,7 +89,7 @@ public class LoginController {
         }
     }
 
-    @ApiOperation(value = "管理员登录")
+    @ApiOperation(value = "管理员登录,需要传入两个参数 1 账号(学号) 2 密码")
     @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
     public ApiResult adminLogin(String studentNo, String password) {
 
@@ -110,17 +109,17 @@ public class LoginController {
 
     @ApiOperation(value = "添加管理员，职位为1的会长才可以调用，需要传入姓名，账号，密码，职务 1 会长 2 副会长 3 部门部长")
     @RequestMapping(value = "/addAdmin",method = RequestMethod.POST)
-    public ApiResult addAdmin(String name, String account, String password, Integer position, String studentNo) {
-        Admin admin = adminService.findByAccount(account);
+    public ApiResult addAdmin(String name, String phone, String password, Integer position, String studentNo) {
+        Admin admin = adminService.findByStudentNo(studentNo);
         if(null != admin) {
-            return ApiResult.error("管理员：" + account + "已存在");
+            return ApiResult.error("管理员：" + studentNo + "已存在");
         }
         Admin newAdmin = new Admin();
         newAdmin.setName(name);//姓名
-        newAdmin.setAccount(account);//账号
+        newAdmin.setPhone(phone);//账号
         newAdmin.setPassword(MD5Utils.MD5(password));//MD5加密的密码
         newAdmin.setPosition(position);//职务 1 会长 2 副会长 3 部门部长
-        newAdmin.setStudentNo(studentNo);//学号
+        newAdmin.setStudentNo(studentNo);//账号(学号)
         try {
             adminService.save(newAdmin);
             logService.create("管理员" + name + "添加成功");

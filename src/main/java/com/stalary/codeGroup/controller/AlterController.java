@@ -42,7 +42,7 @@ public class AlterController {
         return userService.alterPassword(user,newPassword);
     }
 
-    @ApiOperation("用户忘记密码时，需要传入三个参数 1 学号 2 邮箱 3 密码")
+    @ApiOperation("用户忘记密码时，需要传入三个参数 1 用户账号(学号) 2 邮箱 3 密码")
     @RequestMapping(value = "/userForgetPassword",method = RequestMethod.POST)
     public ApiResult userForgetPassword(String studentNo, String mail, String password) {
         User user = userService.findByStudentNo(studentNo);
@@ -55,23 +55,24 @@ public class AlterController {
         return userService.alterPassword(user, password);
     }
 
-    @ApiOperation("修改管理员密码 需要传入 三个参数 1 管理员账号 2 原密码 3 新密码")
+    @ApiOperation("管理员修改密码 需要传入 三个参数 1 token 2 原密码 3 新密码")
     @RequestMapping(value = "/adminAlterPassword",method = RequestMethod.POST)
-    public ApiResult adminAlterPassword(String account, String oldPassword, String newPassword) {
-        Admin admin = adminService.findByAccount(account);
+    public ApiResult adminAlterPassword(String oldPassword, String newPassword) {
+        Integer keyId = WebUtils.getLoginUserId();
+        Admin admin = adminService.findOne(keyId);
         if(null == admin) {
-            return ApiResult.error("管理员：" + account + "不存在");
+            return ApiResult.error("管理员：" + keyId + "不存在");
         }
         if(!admin.getPassword().equals(MD5Utils.MD5(oldPassword))) {
-            return ApiResult.error("管理员：" + account + "原密码错误");
+            return ApiResult.error("管理员：" + keyId + "原密码错误");
         }
         return adminService.alterPassword(admin, newPassword);
     }
 
-    @ApiOperation("管理员忘记密码时，需要传入三个参数 1 管理员账号，2 姓名 3 密码")
+    @ApiOperation("管理员忘记密码时，需要传入三个参数 1 管理员账号(学号)，2 姓名 3 密码")
     @RequestMapping(value = "/adminForgetPassword",method = RequestMethod.POST)
     public ApiResult adminForgetPassword(String account, String name, String password) {
-        Admin admin = adminService.findByAccount(account);
+        Admin admin = adminService.findByStudentNo(account);
         if(null == admin) {
             return ApiResult.error("管理员：" + account + "不存在");
         }

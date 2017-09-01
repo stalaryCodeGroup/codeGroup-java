@@ -14,9 +14,9 @@ import java.util.Date;
 public class User extends BaseObject{
 
     private String name;//姓名
-    private String account;//账号
+    private String phone;//手机号
     private String password;//密码
-    private String studentNo;//学号
+    private String studentNo;//学号(账号)
     private String sex;//性别
     private Integer rank;//积分
     private Date registerTime;//注册时间
@@ -43,12 +43,12 @@ public class User extends BaseObject{
         this.name = name;
     }
 
-    public String getAccount() {
-        return account;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
