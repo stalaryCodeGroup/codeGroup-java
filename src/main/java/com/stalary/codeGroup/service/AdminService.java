@@ -30,8 +30,8 @@ public class AdminService extends BaseService<Admin,AdminRepo>{
         return repo.findByStudentNo(studentNo);//通过学号查找管理员
     }
 
-    public List<Admin> sortByPosition() {
-        return repo.sortByPosition();//通过职务排序
+    public List<Admin> sortByPositionAndYear() {
+        return repo.sortByPositionAndYear();//通过职务排序
     }
 
     public ApiResult alterPassword(Admin admin, String password) {

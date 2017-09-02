@@ -4,7 +4,6 @@ import com.stalary.codeGroup.entity.Admin;
 import com.stalary.codeGroup.entity.User;
 import com.stalary.codeGroup.service.AdminService;
 import com.stalary.codeGroup.service.UserService;
-import com.stalary.codeGroup.util.WebUtils;
 import com.stalary.codeGroup.viewmodel.ApiResult;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,17 +50,16 @@ public class ShowController {
     @ApiOperation(value = "展示管理员列表,按照职位排序")
     @RequestMapping(value = "/showAdminList",method = RequestMethod.POST)
     public ApiResult showAdminList() {
-        List<Admin> adminList = adminService.sortByPosition();
+        List<Admin> adminList = adminService.sortByPositionAndYear();
         if(null == adminList || 0 == adminList.size()) {
             return ApiResult.ok("无管理员");
         }
         return ApiResult.ok(adminList);
     }
 
-    @ApiOperation(value = "展示用户信息")
+    @ApiOperation(value = "展示用户信息，需要传入用户的keyId")
     @RequestMapping(value = "/showOneUser",method = RequestMethod.POST)
-    public ApiResult showOneUser() {
-        Integer keyId = WebUtils.getLoginUserId();
+    public ApiResult showOneUser(Integer keyId) {
         User user = userService.findOne(keyId);
         if(null == user) {
             return ApiResult.error("用户不存在");
@@ -69,10 +67,9 @@ public class ShowController {
         return ApiResult.ok(user);
     }
 
-    @ApiOperation(value = "展示管理员信息")
+    @ApiOperation(value = "展示管理员信息，需要传入管理员的keyId")
     @RequestMapping(value = "/showOneAdmin",method = RequestMethod.POST)
-    public ApiResult showOneAdmin() {
-        Integer keyId = WebUtils.getLoginUserId();
+    public ApiResult showOneAdmin(Integer keyId) {
         Admin admin = adminService.findOne(keyId);
         if(null == admin) {
             return ApiResult.error("用户不存在");
