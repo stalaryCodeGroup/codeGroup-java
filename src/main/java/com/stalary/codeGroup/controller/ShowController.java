@@ -1,9 +1,12 @@
 package com.stalary.codeGroup.controller;
 
 import com.stalary.codeGroup.entity.Admin;
+import com.stalary.codeGroup.entity.Rank;
 import com.stalary.codeGroup.entity.User;
 import com.stalary.codeGroup.service.AdminService;
+import com.stalary.codeGroup.service.RankService;
 import com.stalary.codeGroup.service.UserService;
+import com.stalary.codeGroup.util.WebUtils;
 import com.stalary.codeGroup.viewmodel.ApiResult;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,8 @@ public class ShowController {
     private UserService userService;
     @Resource
     private AdminService adminService;
+    @Resource
+    private RankService rankService;
 
     @ApiOperation(value = "展示用户信息时调用，需要传入排序的类型 1 按照rank积分排序 2 按照注册日期排序")
     @RequestMapping(value = "/showUserList",method = RequestMethod.POST)
@@ -57,9 +62,10 @@ public class ShowController {
         return ApiResult.ok(adminList);
     }
 
-    @ApiOperation(value = "展示用户信息，需要传入用户的keyId")
+    @ApiOperation(value = "展示用户信息")
     @RequestMapping(value = "/showOneUser",method = RequestMethod.POST)
-    public ApiResult showOneUser(Integer keyId) {
+    public ApiResult showOneUser() {
+        Integer keyId = WebUtils.getLoginUserId();
         User user = userService.findOne(keyId);
         if(null == user) {
             return ApiResult.error("用户不存在");
@@ -67,13 +73,24 @@ public class ShowController {
         return ApiResult.ok(user);
     }
 
-    @ApiOperation(value = "展示管理员信息，需要传入管理员的keyId")
+    @ApiOperation(value = "展示管理员信息")
     @RequestMapping(value = "/showOneAdmin",method = RequestMethod.POST)
-    public ApiResult showOneAdmin(Integer keyId) {
+    public ApiResult showOneAdmin() {
+        Integer keyId = WebUtils.getLoginUserId();
         Admin admin = adminService.findOne(keyId);
         if(null == admin) {
             return ApiResult.error("用户不存在");
         }
         return ApiResult.ok(admin);
+    }
+
+    @ApiOperation(value = "展示用户的积分记录，需要传入用户的keyId")
+    @RequestMapping(value = "/showRank",method = RequestMethod.POST)
+    public ApiResult showRank(Integer keyId) {
+        List<Rank> rankList = rankService.findByUserKeyId(keyId);
+        if(null == rankList || 0 == rankList.size()) {
+            return ApiResult.ok("无积分列表");
+        }
+        return ApiResult.ok(rankList);
     }
 }

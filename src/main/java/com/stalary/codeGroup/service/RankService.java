@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author:Stalary
@@ -55,5 +56,9 @@ public class RankService extends BaseService<Rank,RankRepo>{
             logService.create("用户：" + keyId + "积分修改失败！");
             return ApiResult.error("用户积分修改失败！");
         }
+    }
+
+    public List<Rank> findByUserKeyId(Integer keyId) {
+        return repo.findByUserKeyId(keyId);//通过关联用户的keyId来查找积分纪录
     }
 }
