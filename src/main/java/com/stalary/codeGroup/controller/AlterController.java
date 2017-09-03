@@ -85,9 +85,14 @@ public class AlterController {
         return adminService.alterPassword(admin,password);
     }
 
-    @ApiOperation(value = "修改用户积分时调用，需要传入修改数量，修改详情（可选），修改类型 1 签到 2 参加活动 3 比赛 4 违规--（前台）--（后台）")
+    @ApiOperation(value = "修改用户积分时调用，需要传入用户的学号，修改数量，修改详情（可选），修改类型 1 签到 2 参加活动 3 比赛 4 违规--（前台）--（后台）")
     @RequestMapping(value = "/alterRank",method = RequestMethod.POST)
-    public ApiResult alterRank(Integer alterNumber, String alterDetail, Integer type) {
-        return rankService.alterRank(alterNumber, alterDetail, type);
+    public ApiResult alterRank(String studentNo, String alterNumber, String alterDetail, Integer type) {
+        User user = userService.findByStudentNo(studentNo);
+        if(null == user) {
+            return ApiResult.error("用户" + studentNo + "不存在");
+        }
+        Integer alterNumberFinal = Integer.parseInt(alterNumber);
+        return rankService.alterRank(user.getKeyId(), alterNumberFinal, alterDetail, type);
     }
 }

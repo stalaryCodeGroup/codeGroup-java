@@ -3,7 +3,6 @@ package com.stalary.codeGroup.service;
 import com.stalary.codeGroup.entity.Rank;
 import com.stalary.codeGroup.entity.User;
 import com.stalary.codeGroup.repo.RankRepo;
-import com.stalary.codeGroup.util.WebUtils;
 import com.stalary.codeGroup.viewmodel.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +28,7 @@ public class RankService extends BaseService<Rank,RankRepo>{
         super(repo);
     }
 
-    public ApiResult alterRank(Integer alterNumber, String alterDetail, Integer type) {
-        Integer keyId = WebUtils.getLoginUserId();
+    public ApiResult alterRank(Integer keyId, Integer alterNumber, String alterDetail, Integer type) {
         User user = userService.findOne(keyId);//通过keyId查找用户
         if(null == user) {
             return ApiResult.error("用户：" + keyId + "不存在");
