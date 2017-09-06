@@ -3,9 +3,11 @@ package com.stalary.codeGroup.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stalary.codeGroup.entity.Admin;
+import com.stalary.codeGroup.entity.Rank;
 import com.stalary.codeGroup.entity.User;
 import com.stalary.codeGroup.service.AdminService;
 import com.stalary.codeGroup.service.LogService;
+import com.stalary.codeGroup.service.RankService;
 import com.stalary.codeGroup.service.UserService;
 import com.stalary.codeGroup.util.DigestUtil;
 import com.stalary.codeGroup.util.MD5Utils;
@@ -36,6 +38,8 @@ public class LoginController {
     private LogService logService;
     @Resource
     private AdminService adminService;
+    @Resource
+    private RankService rankService;
 
     @ApiOperation(value = "用户登陆时调用，需要传入两个参数 1 账号(学号) 2 密码")
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
@@ -80,6 +84,12 @@ public class LoginController {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             userService.save(user);
+            Rank rank = new Rank();
+            rank.setUser_keyId(user.getKeyId());
+            rank.setType(5);
+            rank.setAlterNumber(1000);
+            rank.setAlterDetail("用户注册，初始积分1000");
+            rankService.save(rank);
             logService.create("用户：" + user.getKeyId() + "注册成功");
             String token = DigestUtil.Encrypt(user.getKeyId() + ":" + user.getName());
             resultMap.put("token", token);

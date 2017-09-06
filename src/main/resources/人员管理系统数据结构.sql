@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `rank` (
   `user_keyId` int NOT NULL, -- 关联的用户keyId
   `alterNumber` int NOT NULL default 0, -- 积分变化数量
   `alterDetail` varchar(50), -- 积分变化详情
-  `type` varchar(50), -- 积分变化类型 1 签到 2 参加活动 3 比赛 4 违规
+  `type` varchar(50), -- 积分变化类型 1 签到 2 参加活动 3 比赛 4 违规 5 注册
   `latestTime` datetime NOT NULL, -- 最后修改时间
   PRIMARY KEY (`keyId`)
 );

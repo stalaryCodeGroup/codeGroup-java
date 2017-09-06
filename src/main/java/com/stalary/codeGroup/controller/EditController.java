@@ -3,9 +3,11 @@ package com.stalary.codeGroup.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stalary.codeGroup.entity.Admin;
+import com.stalary.codeGroup.entity.Rank;
 import com.stalary.codeGroup.entity.User;
 import com.stalary.codeGroup.service.AdminService;
 import com.stalary.codeGroup.service.LogService;
+import com.stalary.codeGroup.service.RankService;
 import com.stalary.codeGroup.service.UserService;
 import com.stalary.codeGroup.util.MD5Utils;
 import com.stalary.codeGroup.util.WebUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author:Stalary
@@ -32,6 +35,8 @@ public class EditController {
     private LogService logService;
     @Resource
     private UserService userService;
+    @Resource
+    private RankService rankService;
 
     @ApiOperation(value = "添加管理员，职位为1的会长才可以调用，需要传入姓名，账号，密码，职务，年级 1 会长 2 副会长 3 部门部长")
     @RequestMapping(value = "/addAdmin",method = RequestMethod.POST)
@@ -85,6 +90,17 @@ public class EditController {
         User user = userService.findByStudentNo(studentNo);
         if(null == user) {
             return ApiResult.error("用户不存在");
+        }
+        List<Rank> rankList = rankService.findByUserKeyId(user.getKeyId());
+        if(null == rankList || 0 == rankList.size()) {
+            userService.deleteById(user.getKeyId());
+            return ApiResult.ok("用户删除成功");
+        }
+        int size = rankList.size();
+        for(int i = 0; i < size; i++) {
+            Rank rank = rankList.get(i);
+            rankService.deleteById(rank.getKeyId());
+            logService.create("用户：" + user.getKeyId() + "积分信息删除成功");
         }
         userService.deleteById(user.getKeyId());
         return ApiResult.ok("用户删除成功");
