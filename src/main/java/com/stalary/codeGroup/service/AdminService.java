@@ -34,6 +34,10 @@ public class AdminService extends BaseService<Admin,AdminRepo>{
         return repo.sortByPositionAndYear();//通过职务排序
     }
 
+    public Admin findByMail(String mail) {
+        return repo.findByMail(mail);//通过邮箱查找
+    }
+
     public ApiResult alterPassword(Admin admin, String password) {
         admin.setPassword(MD5Utils.MD5(password));
         try {

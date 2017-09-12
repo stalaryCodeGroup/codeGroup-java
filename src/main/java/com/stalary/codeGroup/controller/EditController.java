@@ -38,7 +38,7 @@ public class EditController {
     @Resource
     private RankService rankService;
 
-    @ApiOperation(value = "添加管理员，职位为1的会长才可以调用，需要传入姓名，账号，密码，职务，年级 1 会长 2 副会长 3 部门部长")
+    @ApiOperation(value = "添加管理员，职位为1的会长才可以调用，需要传入姓名，账号，密码，职务，年级 1 会长 2 副会长 3 部门部长，邮箱")
     @RequestMapping(value = "/addAdmin",method = RequestMethod.POST)
     public ApiResult addAdmin(String result) {
         Integer keyId = WebUtils.getLoginUserId();//获得管理员的keyId
@@ -58,6 +58,7 @@ public class EditController {
         newAdmin.setPosition(Integer.parseInt((String) jsonObject.get("position")));//职务 1 会长 2 副会长 3 部门部长
         newAdmin.setStudentNo((String) jsonObject.get("studentNo"));//账号(学号)
         newAdmin.setYear(Integer.parseInt((String) jsonObject.get("year")));//年级
+        newAdmin.setMail((String) jsonObject.get("mail"));
         try {
             adminService.save(newAdmin);
             logService.create("管理员" + jsonObject.get("name") + "添加成功");

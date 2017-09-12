@@ -20,4 +20,7 @@ public interface UserRepo extends BaseRepo<User,Integer>{
 
     @Query("select u from User u where u.studentNo = ?1")
     User findByStudentNo(String studentNo);//通过学号查找用户
+
+    @Query("select u from User u where u.mail = ?1")
+    User findByMail(String mail);//通过邮箱查找
 }

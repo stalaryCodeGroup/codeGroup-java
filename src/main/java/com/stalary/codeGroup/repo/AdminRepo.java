@@ -20,4 +20,7 @@ public interface AdminRepo extends BaseRepo<Admin, Integer>{
 
     @Query("select a from Admin a order by a.position asc, a.year asc")
     List<Admin> sortByPositionAndYear();//通过职务和年级排序
+
+    @Query("select a from Admin a where a.mail = ?1")
+    Admin findByMail(String mail);//通过邮箱查找
 }

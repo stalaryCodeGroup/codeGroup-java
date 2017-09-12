@@ -45,15 +45,18 @@ public class AlterController {
         return userService.alterPassword(user,newPassword);
     }
 
-    @ApiOperation("用户忘记密码时，需要传入三个参数 1 用户账号(学号) 2 姓名 3 密码")
+    @ApiOperation("用户忘记密码时，需要传入四个参数 1 用户账号(学号) 2 姓名 3 密码 4 邮箱")
     @RequestMapping(value = "/userForgetPassword",method = RequestMethod.POST)
-    public ApiResult userForgetPassword(String studentNo, String name, String password) {
+    public ApiResult userForgetPassword(String studentNo, String name, String password, String mail) {
         User user = userService.findByStudentNo(studentNo);
         if(null == user) {
             return ApiResult.error("学号输入错误");
         }
         if(!user.getName().equals(name)) {
             return ApiResult.error("姓名输入错误");
+        }
+        if(!user.getMail().equals(mail)) {
+            return ApiResult.error("邮箱输入错误");
         }
         return userService.alterPassword(user, password);
     }
@@ -72,15 +75,18 @@ public class AlterController {
         return adminService.alterPassword(admin, newPassword);
     }
 
-    @ApiOperation("管理员忘记密码时，需要传入三个参数 1 管理员账号(学号)，2 姓名 3 密码")
+    @ApiOperation("管理员忘记密码时，需要传入四个参数 1 管理员账号(学号)，2 姓名 3 密码 4 邮箱")
     @RequestMapping(value = "/adminForgetPassword",method = RequestMethod.POST)
-    public ApiResult adminForgetPassword(String studentNo, String name, String password) {
+    public ApiResult adminForgetPassword(String studentNo, String name, String password, String mail) {
         Admin admin = adminService.findByStudentNo(studentNo);
         if(null == admin) {
-            return ApiResult.error("管理员：" + studentNo + "不存在");
+            return ApiResult.error("学号输入错误");
         }
         if(!admin.getName().equals(name)) {
-            return ApiResult.error("管理员：" + studentNo + "姓名输入错误");
+            return ApiResult.error("姓名输入错误");
+        }
+        if(!admin.getMail().equals(mail)) {
+            return ApiResult.error("邮箱输入错误");
         }
         return adminService.alterPassword(admin,password);
     }
