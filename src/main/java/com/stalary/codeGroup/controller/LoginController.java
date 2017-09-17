@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * @Author:Stalary
@@ -44,6 +45,7 @@ public class LoginController {
     @ApiOperation(value = "用户登陆时调用，需要传入两个参数 1 账号(学号) 2 密码")
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ApiResult userLogin(String studentNo, String password) {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
         User user = userService.findByStudentNo(studentNo);//通过学号查找用户
         if(null == user) {
             return ApiError.accountNotFound();
@@ -62,6 +64,7 @@ public class LoginController {
     @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->手机号，姓名，密码，学号，性别，家乡，邮箱，年级，专业，qq号向前台返回token")
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
     public ApiResult userRegister(String result) {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
         JSONObject jsonObject = JSON.parseObject(result);//接收前台的json串
         if(null != userService.findByStudentNo((String) jsonObject.get("studentNo"))) {
             return ApiResult.error("已注册，请勿重复注册！");
