@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * @Author:Stalary
@@ -45,7 +42,8 @@ public class LoginController {
     @ApiOperation(value = "用户登陆时调用，需要传入两个参数 1 账号(学号) 2 密码")
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ApiResult userLogin(String studentNo, String password) {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        Date date = calendar.getTime();
         User user = userService.findByStudentNo(studentNo);//通过学号查找用户
         if(null == user) {
             return ApiError.accountNotFound();
@@ -53,7 +51,7 @@ public class LoginController {
         if(!user.getPassword().equals(MD5Utils.MD5(password))) {
             return ApiError.errorPassword();
         }
-        user.setLoginTime(new Date());//存储用户的登陆时间
+        user.setLoginTime(date);//存储用户的登陆时间
         userService.save(user);
         Map<String, Object> resultMap = new HashMap<>();
         String token = DigestUtil.Encrypt(user.getKeyId() + ":" + studentNo);
@@ -64,16 +62,17 @@ public class LoginController {
     @ApiOperation(value = "用户注册时调用，需要传入表单数据（json格式）->手机号，姓名，密码，学号，性别，家乡，邮箱，年级，专业，qq号向前台返回token")
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
     public ApiResult userRegister(String result) {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        Date date = calendar.getTime();
         JSONObject jsonObject = JSON.parseObject(result);//接收前台的json串
         if(null != userService.findByStudentNo((String) jsonObject.get("studentNo"))) {
             return ApiResult.error("已注册，请勿重复注册！");
         }
         User user = new User();
+        user.setRegisterTime(date);//注册时间
+        user.setLoginTime(date);//登陆时间
         user.setPhone((String) jsonObject.get("phone"));//手机号
         user.setName((String) jsonObject.get("name"));//姓名
-        user.setLoginTime(new Date());//登陆时间
-        user.setRegisterTime(new Date());//注册时间
         user.setPassword(MD5Utils.MD5((String) jsonObject.get("password")));//MD5加密的密码
         user.setRank(1000);//默认积分为1000
         user.setStudentNo((String) jsonObject.get("studentNo"));//账号(学号)

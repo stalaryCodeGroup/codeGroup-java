@@ -83,6 +83,7 @@ public class EditController {
         }
         adminService.deleteById(admin.getKeyId());
         return ApiResult.ok("管理员删除成功");
+
     }
 
     @ApiOperation(value = "删除用户，需要传入用户的学号")
