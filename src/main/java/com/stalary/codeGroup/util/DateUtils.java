@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author Peter on 2017-03-14.
@@ -201,4 +202,13 @@ public class DateUtils {
         return calendar.getActualMaximum(Calendar.DATE);
     }
 
+    /**
+     * 设置当前时区为中国，然后获取当前时间，转化为字符串
+     */
+    public static String getChinaTime() {
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        Date date = calendar.getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return df.format(date);
+    }
 }

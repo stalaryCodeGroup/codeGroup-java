@@ -2,7 +2,6 @@ package com.stalary.codeGroup.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
  * @Author:Stalary
@@ -19,8 +18,8 @@ public class User extends BaseObject{
     private String studentNo;//学号(账号)
     private String sex;//性别
     private Integer rank;//积分
-    private Date registerTime;//注册时间
-    private Date loginTime;//上次登陆时间
+    private String registerTime;//注册时间
+    private String loginTime;//上次登陆时间
     private String region;//居住地
     private String major;//专业
     private String year;//年级
@@ -83,20 +82,20 @@ public class User extends BaseObject{
         this.rank = rank;
     }
 
-    public Date getLoginTime() {
-        return loginTime;
-    }
-
-    public void setLoginTime(Date loginTime) {
-        this.loginTime = loginTime;
-    }
-
-    public Date getRegisterTime() {
+    public String getRegisterTime() {
         return registerTime;
     }
 
-    public void setRegisterTime(Date registerTime) {
+    public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
+    }
+
+    public String getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(String loginTime) {
+        this.loginTime = loginTime;
     }
 
     public String getRegion() {

@@ -9,6 +9,7 @@ import com.stalary.codeGroup.service.AdminService;
 import com.stalary.codeGroup.service.LogService;
 import com.stalary.codeGroup.service.RankService;
 import com.stalary.codeGroup.service.UserService;
+import com.stalary.codeGroup.util.DateUtils;
 import com.stalary.codeGroup.util.DigestUtil;
 import com.stalary.codeGroup.util.MD5Utils;
 import com.stalary.codeGroup.viewmodel.ApiError;
@@ -42,8 +43,6 @@ public class LoginController {
     @ApiOperation(value = "用户登陆时调用，需要传入两个参数 1 账号(学号) 2 密码")
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ApiResult userLogin(String studentNo, String password) {
-        Calendar calendar = Calendar.getInstance(Locale.CHINA);
-        Date date = calendar.getTime();
         User user = userService.findByStudentNo(studentNo);//通过学号查找用户
         if(null == user) {
             return ApiError.accountNotFound();
@@ -51,7 +50,7 @@ public class LoginController {
         if(!user.getPassword().equals(MD5Utils.MD5(password))) {
             return ApiError.errorPassword();
         }
-        user.setLoginTime(date);//存储用户的登陆时间
+        user.setLoginTime(DateUtils.getChinaTime());//存储用户的登陆时间
         userService.save(user);
         Map<String, Object> resultMap = new HashMap<>();
         String token = DigestUtil.Encrypt(user.getKeyId() + ":" + studentNo);
@@ -69,8 +68,8 @@ public class LoginController {
             return ApiResult.error("已注册，请勿重复注册！");
         }
         User user = new User();
-        user.setRegisterTime(date);//注册时间
-        user.setLoginTime(date);//登陆时间
+        user.setRegisterTime(DateUtils.getChinaTime());//注册时间
+        user.setLoginTime(DateUtils.getChinaTime());//登陆时间
         user.setPhone((String) jsonObject.get("phone"));//手机号
         user.setName((String) jsonObject.get("name"));//姓名
         user.setPassword(MD5Utils.MD5((String) jsonObject.get("password")));//MD5加密的密码
