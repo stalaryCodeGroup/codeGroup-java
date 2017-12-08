@@ -2,7 +2,6 @@ package com.stalary.codeGroup.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
  * @Author:Stalary
@@ -14,18 +13,18 @@ import java.util.Date;
 public class User extends BaseObject{
 
     private String name;//姓名
-    private String account;//账号
+    private String phone;//手机号
     private String password;//密码
-    private String studentNo;//学号
+    private String studentNo;//学号(账号)
     private String sex;//性别
     private Integer rank;//积分
-    private Date registerTime;//注册时间
-    private Date loginTime;//上次登陆时间
+    private String registerTime;//注册时间
+    private String loginTime;//上次登陆时间
     private String region;//居住地
     private String major;//专业
     private String year;//年级
     private String mail;//邮箱
-
+    private String QQ;//QQ号
 
 
     public User() {
@@ -43,12 +42,12 @@ public class User extends BaseObject{
         this.name = name;
     }
 
-    public String getAccount() {
-        return account;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -83,20 +82,20 @@ public class User extends BaseObject{
         this.rank = rank;
     }
 
-    public Date getLoginTime() {
-        return loginTime;
-    }
-
-    public void setLoginTime(Date loginTime) {
-        this.loginTime = loginTime;
-    }
-
-    public Date getRegisterTime() {
+    public String getRegisterTime() {
         return registerTime;
     }
 
-    public void setRegisterTime(Date registerTime) {
+    public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
+    }
+
+    public String getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(String loginTime) {
+        this.loginTime = loginTime;
     }
 
     public String getRegion() {
@@ -129,5 +128,13 @@ public class User extends BaseObject{
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getQQ() {
+        return QQ;
+    }
+
+    public void setQQ(String QQ) {
+        this.QQ = QQ;
     }
 }

@@ -22,16 +22,20 @@ public class AdminService extends BaseService<Admin,AdminRepo>{
         super(repo);
     }
 
-    public Admin findByAccount(String account) {
-        return repo.findByAccount(account);//通过账号查找管理员
+    public Admin findByPhone(String phone) {
+        return repo.findByPhone(phone);//通过账号查找管理员
     }
 
     public Admin findByStudentNo(String studentNo) {
         return repo.findByStudentNo(studentNo);//通过学号查找管理员
     }
 
-    public List<Admin> sortByPosition() {
-        return repo.sortByPosition();//通过职务排序
+    public List<Admin> sortByPositionAndYear() {
+        return repo.sortByPositionAndYear();//通过职务排序
+    }
+
+    public Admin findByMail(String mail) {
+        return repo.findByMail(mail);//通过邮箱查找
     }
 
     public ApiResult alterPassword(Admin admin, String password) {

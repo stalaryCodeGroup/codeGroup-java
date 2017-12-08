@@ -13,10 +13,12 @@ import javax.persistence.Table;
 public class Admin extends BaseObject{
 
     private String name;//姓名
-    private String account;//账号
+    private String phone;//手机号
     private String password;//密码
     private Integer position;//职位 1 会长 2 副会长 3 部门部长
-    private String studentNo;//学号
+    private String studentNo;//学号(账号)
+    private String mail;//邮箱
+    private Integer year;//年级
 
     public Admin() {
     }
@@ -33,12 +35,12 @@ public class Admin extends BaseObject{
         this.name = name;
     }
 
-    public String getAccount() {
-        return account;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -63,5 +65,21 @@ public class Admin extends BaseObject{
 
     public void setStudentNo(String studentNo) {
         this.studentNo = studentNo;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }

@@ -34,6 +34,10 @@ public class UserService extends BaseService<User, UserRepo> {
         return repo.sortByRegisterTime();//通过注册日期排序
     }
 
+    public User findByMail(String mail) {
+        return repo.findByMail(mail);//通过邮箱查找
+    }
+
     public ApiResult alterPassword(User user, String password) {
         user.setPassword(MD5Utils.MD5(password));
         try {

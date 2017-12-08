@@ -1,8 +1,10 @@
 package com.stalary.codeGroup.controller;
 
 import com.stalary.codeGroup.entity.Admin;
+import com.stalary.codeGroup.entity.Rank;
 import com.stalary.codeGroup.entity.User;
 import com.stalary.codeGroup.service.AdminService;
+import com.stalary.codeGroup.service.RankService;
 import com.stalary.codeGroup.service.UserService;
 import com.stalary.codeGroup.util.WebUtils;
 import com.stalary.codeGroup.viewmodel.ApiResult;
@@ -27,6 +29,8 @@ public class ShowController {
     private UserService userService;
     @Resource
     private AdminService adminService;
+    @Resource
+    private RankService rankService;
 
     @ApiOperation(value = "展示用户信息时调用，需要传入排序的类型 1 按照rank积分排序 2 按照注册日期排序")
     @RequestMapping(value = "/showUserList",method = RequestMethod.POST)
@@ -51,7 +55,7 @@ public class ShowController {
     @ApiOperation(value = "展示管理员列表,按照职位排序")
     @RequestMapping(value = "/showAdminList",method = RequestMethod.POST)
     public ApiResult showAdminList() {
-        List<Admin> adminList = adminService.sortByPosition();
+        List<Admin> adminList = adminService.sortByPositionAndYear();
         if(null == adminList || 0 == adminList.size()) {
             return ApiResult.ok("无管理员");
         }
@@ -78,5 +82,15 @@ public class ShowController {
             return ApiResult.error("用户不存在");
         }
         return ApiResult.ok(admin);
+    }
+
+    @ApiOperation(value = "展示用户的积分记录，需要传入用户的keyId")
+    @RequestMapping(value = "/showRank",method = RequestMethod.POST)
+    public ApiResult showRank(Integer keyId) {
+        List<Rank> rankList = rankService.findByUserKeyId(keyId);
+        if(null == rankList || 0 == rankList.size()) {
+            return ApiResult.ok("无积分列表");
+        }
+        return ApiResult.ok(rankList);
     }
 }

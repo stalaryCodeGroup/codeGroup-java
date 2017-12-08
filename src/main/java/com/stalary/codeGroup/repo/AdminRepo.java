@@ -12,12 +12,15 @@ import java.util.List;
  */
 public interface AdminRepo extends BaseRepo<Admin, Integer>{
 
-    @Query("select a from Admin a where a.account = ?1")
-    Admin findByAccount(String account);//通过账号查找
+    @Query("select a from Admin a where a.phone = ?1")
+    Admin findByPhone(String account);//通过手机号查找
 
     @Query("select a from Admin a where a.studentNo = ?1")
     Admin findByStudentNo(String studentNo);//通过学号查找
 
-    @Query("select a from Admin a order by a.position asc")
-    List<Admin> sortByPosition();//通过职务排序
+    @Query("select a from Admin a order by a.position asc, a.year asc")
+    List<Admin> sortByPositionAndYear();//通过职务和年级排序
+
+    @Query("select a from Admin a where a.mail = ?1")
+    Admin findByMail(String mail);//通过邮箱查找
 }
